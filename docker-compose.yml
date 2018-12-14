@@ -34,6 +34,7 @@ services:
         volumes:
           - ./nginx/conf.d:/etc/nginx/conf.d
           - static_v:/django/src/staticfiles
+          - ssh_v:/etc/letsencrypt
         networks:
           - nginx_network
         depends_on:
@@ -48,3 +49,4 @@ networks:
 volumes:
     db_v:
     static_v:
+    ssh_v:
