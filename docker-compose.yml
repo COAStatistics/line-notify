@@ -1,0 +1,50 @@
+version: '3'
+services:
+
+    db1:
+        container_name: 'db1'
+        image: postgres:latest
+        expose:
+          - 5432
+        env_file:
+          - ./postgresql/env
+        volumes:
+          - db_v:/var/lib/postgresql/data
+        networks:
+          - db_network
+
+    web1:
+        container_name: 'web1'
+        build: ./src
+        volumes:
+          - .:/django
+          - static_v:/django/src/staticfiles
+        networks:
+          - db_network
+          - nginx_network
+        depends_on:
+          - db1
+
+    nginx:
+        container_name: 'nginx'
+        image: nginx:latest
+        ports:
+          - 80:80
+          - 443:443
+        volumes:
+          - ./nginx/conf.d:/etc/nginx/conf.d
+          - static_v:/django/src/staticfiles
+        networks:
+          - nginx_network
+        depends_on:
+          - web1
+
+networks:
+    db_network:
+        driver: bridge
+    nginx_network:
+        driver: bridge
+
+volumes:
+    db_v:
+    static_v:

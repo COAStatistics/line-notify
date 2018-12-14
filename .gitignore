@@ -2,6 +2,8 @@
 local.py
 production.py
 staticfiles/
+env
+local.conf
 
 ### pycharm ###
 venv/
