@@ -23,7 +23,7 @@ def callback(request):
         body = request.body.decode('utf-8')
 
         try:
-            events = parser.parse(body, signature)
+            events = handler.parse(body, signature)
         except InvalidSignatureError:
             return HttpResponseForbidden()
         except LineBotApiError:
