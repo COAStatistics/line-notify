@@ -34,3 +34,6 @@ def home(request):
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
+
+    if request.method == 'GET':
+        return HttpResponse('Hello!')
