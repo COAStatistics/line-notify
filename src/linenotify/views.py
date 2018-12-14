@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseForbidden
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError,LineBotApiError
@@ -11,6 +12,7 @@ handler = WebhookHandler(settings.HANDLER)
 
 # Create your views here.
 
+@csrf_exempt
 def home(request):
     if request.method == 'POST':
         signature = request.META['HTTP_X_LINE_SIGNATURE']
