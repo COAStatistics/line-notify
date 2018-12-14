@@ -12,8 +12,12 @@ handler = WebhookHandler(settings.HANDLER)
 
 # Create your views here.
 
-@csrf_exempt
 def home(request):
+    if request.method == 'GET':
+        return HttpResponse('Hello!')
+
+@csrf_exempt
+def callback(request):
     if request.method == 'POST':
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
@@ -34,6 +38,3 @@ def home(request):
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
-
-    if request.method == 'GET':
-        return HttpResponse('Hello!')
