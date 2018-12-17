@@ -41,7 +41,8 @@ def callback(request):
                         event.reply_token,
                         TextSendMessage(text='恭喜答對，以後一起吃大便~耶!')
                     )
-                    models.UserID.objects.create(user_id=event.source.userId)
+                    print(event.source.user_id)
+                    models.UserID.objects.create(user_id=event.source.user_id)
                 else:
                     line_bot_api.reply_message(
                         event.reply_token,
