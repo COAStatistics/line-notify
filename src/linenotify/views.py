@@ -6,7 +6,7 @@ from . import models
 
 from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError,LineBotApiError
-from linebot.models import MessageEvent, TextMessage, TextSendMessage
+from linebot.models import MessageEvent, TextMessage, TextSendMessage, FollowEvent
 
 line_bot_api = LineBotApi(settings.CHANNEL_ACCESS_TOKEN)
 webhook = WebhookHandler(settings.CHANNEL_SECRET)
@@ -20,6 +20,10 @@ def home(request):
 @csrf_exempt
 def callback(request):
     if request.method == 'POST':
+        print('line_bot_api channel access token = ' + settings.CHANNEL_ACCESS_TOKEN)
+        print('webhook channel secret = ' + settings.CHANNEL_SECRET)
+        print('request META = ' + request.META['HTTP_X_LINE_SIGNATURE'])
+        print('body = ' + request.body.decode('utf-8'))
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
 
