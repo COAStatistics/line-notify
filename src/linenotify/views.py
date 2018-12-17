@@ -7,8 +7,8 @@ from linebot import LineBotApi, WebhookHandler
 from linebot.exceptions import InvalidSignatureError,LineBotApiError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-line_bot_api = LineBotApi(settings.LINE_BOT_API)
-handler = WebhookHandler(settings.HANDLER)
+line_bot_api = LineBotApi(settings.CHANNEL_ACCESS_TOKEN)
+webhook = WebhookHandler(settings.CHANNEL_SECRET)
 
 # Create your views here.
 
@@ -23,7 +23,7 @@ def callback(request):
         body = request.body.decode('utf-8')
 
         try:
-            events = handler.parse(body, signature)
+            events = webhook.parser.parse(body, signature)
         except InvalidSignatureError:
             return HttpResponseForbidden()
         except LineBotApiError:
