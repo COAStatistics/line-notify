@@ -56,3 +56,10 @@ def callback(request):
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
+
+def push(request):
+    line_bot_api.push(
+        models.UserID.objects.first(),
+        TextSendMessage(text='How are you')
+    )
+    return HttpResponse
